@@ -1,0 +1,15 @@
+\chapter{Conclusion and future steps} \label{chapter_conclusion}
+
+This thesis addressed the challenges of an enlargement of the installation length for the VSR cryomodule. The V4 optics, presented the in the last chapter, showed that a turn off of the Q5 quadrupoles in the T2 straight is possible. The optics were tested at the storage ring and high current with reasonable lifetime and injection efficiency was stored. 
+
+The optics has still to be optimized in regards to different aspects. First the objective function of the optimization method should be adapted. At the moment the main weighting factor is the mean relative residual of the beta function. This means that a change from 4\,m to 2\,m corresponding to -50\,\% has the same weight as a change from 20\,m to 30\,m (+50\,\% ). This has the result that the beta function in some straights is smaller than the reference value and is therefore larger in the subsequent DBA. Furthermore it should be possible to set the value of the beta function at certain points. This would allow to adjust the beta functions at the VSR cryomodule to the desired value.
+
+Besides the optimization of the linear beam dynamics the optics has to be optimized in regards to the non-linear elements. The sextupoles can be used to enhance the phase and momentum acceptance.
+
+Another important point is the correct conversion of the quadrupole strengths to the power supply values. Therefore it would be very convenient to have conversion functions for the individual quadrupole families. These should be tested with LOCO to make sure that the simulated optics is transfered correctly to the machine.
+
+This thesis only considered solutions with existing hardware. A possible solution with a hardware modification would be to split of the quadrupole and sextupole families in the T2, D2 and D3 sections to increase the degrees of freedom. It has to be verified by simulations if this approach will lead to a better solution.
+
+Also the optimization method can be improved. The used Nelder-Mead method is relatively slow and it has a weakness when considering local minima. Due to the increasing hype on machine learning, many new open source software libraries have been developed, which can be used to solve diverse optimization tasks. Their applicability to lattice optimization problems should be tested.
+
+In conclusion this thesis made a first step towards a VSR optics without the Q5 quadrupoles in the T2 straight. The software and tools developed during this thesis can also be used for future lattice optimization tasks.

@@ -1,0 +1,6 @@
+!!NAME:FODOCELL ohne Dipol
+Dr: DRIF,L=3
+QF: KQUAD,L=1, K1=0.02
+QD: KQUAD,L=2, K1=-0.07
+
+RING: LINE=(QF,Dr,QD,Dr,QF)

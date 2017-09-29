@@ -1,0 +1,126 @@
+\chapter{Lattice design for the BESSY II storage ring}\label{chapter:bessy2lattice}
+%Changing the BESSY II lattice requires a general understanding of the storage ring. Therefore it is useful comprehend the development history of the accelerator. 
+This chapter provides a condensed overview of the lattice design for the BESSY II storage ring. The first section presents the considerations made for the symmetrical design lattice in 1996~\cite{latticedesignbessy2}. The second section gives a brief summary over the chances and modifications leading to the current standard lattice in 2017, which is the starting point for the BESSY-VSR lattice. The requirements and restrictions for the optimization towards the BESSY-VSR lattice are covered in the last section.
+
+\section{The symmetrical design lattice from 1996}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/04-design-DBA.pdf}
+	\caption[The Double Bend Achromat of the BESSY II storage ring]{The trajectories for off-momentum particles in the DBA are calculated due to integration of the equations of motion. In the first plot it is shown how the DBA compensates the dipole caused dispersion for a particle beam without a spatial offset. In the second plot the particle beam has a spatial distribution as well as a momentum distribution. It can be seen that the dispersion function is directly linked to the horizontal offset. The lower plot shows the corresponding Twiss parameters of the DBA.}
+	\label{fig:bessy2DBA}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/04-design-lattice.pdf}
+	\caption{The design lattice of the BESSY II storage ring.}
+	\label{fig:design-lattice}
+\end{figure}
+\begin{table}
+	\centering
+	\footnotesize
+	\caption{The quadrupole strengths of the design lattice.}
+	\input{tables/design_magnets_strength.tex}
+	\label{tab:magnetsstrengthsdesignlattice}
+\end{table}
+
+As BESSY II was build as a third generation light source the goal was to provide a large number of IDs with high brightness synchrotron light. Therefore especially long straights with zero dispersion are required. For this purpose an achromat lattice was needed, which means that no additional dispersion is generated after passing through the magnet structure. The double bend achromat was, because of its compactness compared to other multi bend achromats, found most appropriate for this task. In principle the simplest realization of the DBA can be achieved with two bending magnets and a single quadrupole in between. The DBA of the BESSY II storage ring is shown in \autoref{fig:bessy2DBA}. The dispersion is introduce by the first dipole magnet, is halted by the quadrupoles in the middle of the DBA and is returned to zero by the second dipole.
+
+For the injection and the undulators high horizontal beta functions in the straights are needed. On the contrary the two superconducting wave length shifter require a very low horizontal beta function. Therefore it was decided to develop a lattice with alternating high and low horizontal beta straights. This can be achieved by using a quadrupole doublet in the low beta straights and a quadrupole triplet in the high beta straights.
+
+For the 240\,m long storage ring this leads to a 8 fold symmetry with 16 straight sections. The transfer line for the injection is placed in the D1-straight and the cavity installed in the T8-straight. The other 14 straights, which correspond to 18\,\% of the ring circumference, are used for IDs. The design lattice of the BESSY II storage ring is shown in \autoref{fig:design-lattice}. It has 7 quadrupole families in total. The Q1 family is horizontal focusing and is placed in the center of the DBAs. The Q2 quadrupoles are needed for the vertical focusing within the DBAs. The doublet section has the vertical focusing Q3D and the horizontal focusing Q4D magnet. To achieve a low horizontal beta function in the triplet straight the quadrupole strength of the Q4T must be much higher than the one of the Q4D. This leads to the necessity of the third quadrupole family Q5T, which compensates the vertical defocussing of the Q4T. The quadrupole strengths of particular magnets of the design lattice are also listed in \autoref{tab:magnetsstrengthsdesignlattice}. Moreover 6 sextupole families are needed for chromatic and harmonic corrections, but are not further discussed in this thesis.
+
+
+\section{The current standard lattice in 2017} \label{sec:current-standard-lattice}
+Within the last years several upgrades were made to BESSY~II lattice to satisfy the increasing user demands. Thereby especially the hardware modifications made at the storage ring lattice, which define new Twiss parameter, are of particular interest for this thesis. Two major installations of new magnets were done:
+
+Since fall 2005 BESSY II also produces X-ray pluses with about 100 fs duration. This femtoslicing experiment is based on the energy modulation of the electron beam induced by a laser pulse in a so called \textit{modulator}. A dipole chicane displaces the off-momentum electrons in order to extract the synchrotron radiation in the following device, called the \textit{radiator}. Therefore 3 additional dipoles in the D6 straight have been installed. At BESSY II the wiggler U139 is used as modulator. The UE56 undulator performs as radiator. The dipole B2ID is used for the transversal displacement and the B1ID and B3ID are needed to return the beam back to the orbit~\cite{femto1,femto2}. The Twiss parameter of the D6 are shown in \autoref{fig:emilandfemto}.
+
+The second lattice modification was done as part of the EMIL project~\cite{emil1}. Emil includes two insertion devices located in the triplet straight T6. The UE-48 and the CPMU-17 undulators provide a simultaneous access of soft and hard X-rays, respectively. To support the setup of the two canted undulators the vertical beam waist had to be shifted to the center of the CPMU-17 device. This was achieved due to the installation of the vertical focusing quadrupole QIT6 in the center of the T6 section, shown in \autoref{fig:emilandfemto}.
+
+Another important change was the introduction of the so called injection optics. The horizontal beta function $\beta_{\textup{x}}$ was increased in the injections straight and reduced in the other doublet sections to improve the injection efficiency~\cite{kuskeli}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/04-emil-femto-slicing.pdf}
+	\caption{The Twiss parameter in the Emil straight and femto slicing straight.}
+	\label{fig:emilandfemto}
+\end{figure}
+
+In the current lattice configuration each pair of quadrupole family is powered by the same power supply, with exception for magnets in the T1, T6 and T8 straights, which are powered individually. Within the quadrupole of the EMIL straight this leads to 52 quadrupole power supplies and to therefore 52 degrees of freedom in the lattice configuration. As the current standard lattice is the starting point for further lattice development with regard towards VSR project, it is essential to have a precise measurement of the quadrupole strengths. From the present point of view the most reliable method therefore is the LOCO fit. The Linear Optics from closed orbits method was initially developed by James Safranek~\cite{locosafranek} for the National Synchrotron Light Source. The version which was used for this thesis was rewritten in MatLab by Gregory Portman~\cite{mmlbasedloco} and is included in the MatLab Middle Layer~\cite{mmlpaper}. The method measures the orbit response matrix and the dispersion function. The data is then fitted to a lattice model, which yields the individual quadrupole strengths. An overview of the usage and the work flow of the Matlab Middle Layer is included in the \autoref{chapter:methodsandprograms}.
+
+A comparison of the design lattice with the LOCO measured standard lattice from 28.03.2017 is shown in \autoref{fig:design-vs-2017-lattice}. The quadrupoles strengths of the current standard lattice are listed in \autoref{tab:standard2017quadsrengths}. The impact of the injection optics can be directly seen. The horizontal beta functions in the doublet section apart form the injection straight D1 are significantly higher. The maxima of vertical beta function seem to be the same hight, but a bit more irregular. The shift of the focus in the EMIL straight T6 is clearly visible. With exception of the femto slicing straight D6 the dispersion function does not change.
+
+\begin{sidewaysfigure}
+	\centering
+	\includegraphics[width = \linewidth]{images/04-design-vs-2017-lattice.pdf}
+	\caption{Comparison between the design lattice and the current standard lattice (2017).}
+	\label{fig:design-vs-2017-lattice}
+\end{sidewaysfigure}
+
+\section{Requirements for a new lattice} \label{reqfornewlattice}
+\begin{table}[b]
+	\centering
+	\footnotesize
+	\caption[Position of the cavity cells in relation to the center of the T2 straight.]{Position of the cavity cells in relation to the center of the T2 straight (data extracted from~\cite{Ries}).}
+	\input{tables/position-cavitiy-cells.tex}
+	\label{tab:positions-cavity-cells}
+\end{table}
+
+As discussed in \autoref{sec:current-standard-lattice} the BESSY II lattice was further developed in the last years. These changes should be maintained in the new optics and the Twiss functions should not be modified in contrary to previously made considerations. Especially in the femto slicing straight D6 and in the EMIL straight T6 the Twiss parameter should remained unchanged when the Q5T2 is turned off. Also the injection optics as well as the tunes should stay the same. The aim is to develop an optics where the turn off of the Q5 quadrupoles does not effect the other sections and overall changes of the beta functions should be kept as local as possible.
+
+Furthermore there are also restriction in regard to the BESSY-VSR upgrade. As stated in~\cite[p.~79]{Rubrecht_PhD} the transverse cavity impedances
+\begin{align}
+	Z_{\textup{th}}^{\perp}(\tau_{\textup{d}}^{-1}) = \frac{\tau_{\textup{d}}^{-1}}{\beta} \frac{4 \pi E / e}{\omega_{\textup{rev}} I_{\textup{DC}}}
+\end{align}
+scale directly with the value of the beta function and could drive transverse multibunch instabilities. It is assumed that with a beta function value below 4\,m it is possible to store the required current. The beta functions of the design lattice along the cavity are shown in \autoref{fig:betafunctioninT2}.
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.7\textwidth]{images/04-betafunctioninT2.pdf}
+	\caption[The horizontal and vertical betafunctions $\beta_{\textup{x,y}}$ in the T2 sections.]{The horizontal and vertical beta functions $\beta_{\textup{x,y}}$ in the T2 sections (based on~\cite{Rubrecht_PhD}).}
+	\label{fig:betafunctioninT2}
+\end{figure}
+The positions of the individual cavity cells of the design from February 2017 in relation to the center of the T2 straight are listed in \autoref{tab:positions-cavity-cells}. We assume that the beta functions are symmetrical to the center of the T2 straight. The beta matrix in distance from the symmetry point $s=0$ is given by
+
+\begin{equation}\begin{aligned}[b]
+		\textbf{B}(s) =
+		\begin{pmatrix}
+			1 & s \\
+			0 & 1 \\
+		\end{pmatrix}
+		\cdot
+		\begin{pmatrix}
+			\beta^* & 0           \\
+			0       & 1 / \beta^* \\
+		\end{pmatrix}
+		\cdot
+		\begin{pmatrix}
+			1 & 0 \\
+			s & 1 \\
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			\beta^* + \frac{s^2}{\beta^*} & \frac{s}{\beta^*} \\
+			\frac{s}{\beta^*}             & \frac{1}{\beta^*} \\
+		\end{pmatrix},
+	\end{aligned}\label{minbetamatrix}\end{equation}
+where $\beta^*$ corresponds to the minimal beta function at the symmetry point. Consequently the beta function at the orbit position $s$ can be calculated by:
+\begin{align}
+	\beta(s) = \beta^* + \frac{s^2}{\beta^*}
+\end{align}
+The beta function for maximal and average beta function $\beta$ for the 1.50\,GHz and the 1.75\,GHz cavity is shown in \autoref{fig:optimalbeta}. As one can see, the goal should be to hold the minimal beta function $\beta^*$ between 0.6\,m and 3.4\,m. The average beta function is minimal for a minimal beta function of 0.4\,m for the 1.50\,GHz cavity and minimal for a minimal beta function of 1.2\,m for the 1.75\,GHz cavity. Therefore a minimal beta function of 0.8\,m would be optimal.
+
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.495\textwidth, valign=t]{images/04-betafunction_in_cavity.pdf}
+	\includegraphics[width = 0.495\textwidth, valign=t]{images/04-optimal-beta.pdf}
+	\caption[The maximal and average beta function within the cavity in dependence of the minimal beta function $\beta^*$.]{The maximal and average beta function within the cavity in dependence of the minimal beta function $\beta^*$ (based on~\cite{Ries, goslawski}).}
+	\label{fig:optimalbeta}
+\end{figure}
+
+
+
+
+
+

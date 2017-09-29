@@ -1,0 +1,279 @@
+\chapter{Simulations and measurements}
+Measurements and simulations were closely linked in the process of developing a new lattice. Experimental outcomes often lead to new ideas for computational investigations and simulation results were tested at the machine. The methods to optimizing the lattice for the VSR project are covered in \autoref{sec:methods}. The solutions reached with the existing hardware are presented in \autoref{sec:solutions-with-existing-hardware}.
+%Finally solutions with hardware modifications are discussed in \autoref{sec:solutions-with-hardware-modification}.
+
+
+\section{Methods} \label{sec:methods}
+This section describes the developed methods to turn off the Q5T2 magnet. The first approach was done directly at the machine. The experimental results were verified in simulations and the limits of the lattice stability were further tested by scanning the quadrupole strengths. As a scan is very time consuming for a large number of variables another method was needed. It was decided to use a numerical optimizer.
+
+All computational implementations were done in Python. Thereby also other tools were written. For example the Twiss GUI, which allows to change the quadrupole strengths in simulations in the style of the control software. A detailed presentation of the programs used and written for this thesis is included in the \autoref{chapter:methodsandprograms}.
+
+
+\subsection{First approach to turn off the Q5T2 magnets} \label{subsec:firstapproach}
+The first approach to turn off the Q5 quadrupoles in the T2 section was done in the machine commissioning week in mid March 2017. Here the methods were rather heuristic, but were very instructive in regards to get familiar with the control software and to develop a general understanding of the machine.
+
+As a starting point we tested how much the Q5T2 can be reduced without chancing any other magnet. The beam was lost by about 94\,\% of the initial value. As the Q5T2 quadrupole is vertical focusing, the next idea was to use the next vertical focusing magnet, which is the Q3T2, to compensate the turnoff. Increasing the current in the Q3T2 magnet first allowed to reduce the Q5T2 slightly more but lead then to loss of the beam. Therefore next attempt was to decrease the current in the horizontal focusing Q4T2 magnet to reduce its vertical defocussing strength.
+
+In doing so we achieved a working machine with switched of Q5T2 and an injection efficiency of about 20\,\%. The chances in ampere of the quadruples in the T2 section are listed in \autoref{tab:first_approach}.
+\begin{table}[h!]
+	\centering
+	\footnotesize
+	\caption{Changes in ampere of the quadrupoles in the T2 section compared to the standard BESSY II values}
+	\input{tables/First-approach.tex}
+	\label{tab:first_approach}
+\end{table}
+
+This first approach has demonstrated that there are many restrictions and limitations for a stable lattice. Some configurations cause an instability which leads to the loss of the beam. This has to be considered in the process of developing a new lattice and therefore motivates to take a brief look into lattice instabilities.
+
+
+\subsection{Limits of the lattice stability}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-limits-of-FODOcell.pdf}
+	\caption[Limits of the FODO lattice stability.]{The particle trajectories for different configurations of a FODO cell. The plots 1 and 2 show the two limiting cases of a bound movement: A very weak and a very strong configuration. The plots 3 and 4 below show transition from these two stable limit-configurations to the instable configurations. If the quadrupole strength is to weak, the particles cannot be hold together and beam disperses (Plot 3). If the quadrupole strength is to strong, the focus point is before the next quadrupole. This has the effect that transversal offset and slope of the particles have the same sign, which therefore increases the defocussing in the next quadrupole. This accumulating defocussing leads to a collapse of the betatron oscillation (Plot 4). The four different configurations of the FODO lattice are also marked in the stability plot (necktie plot) in \autoref{fig:necktieplot}.}
+	\label{fig:limitsfodocell}
+
+	\centering
+	\includegraphics[width = 0.6\textwidth]{images/05-necktie-plot.pdf}
+	\caption[The necktie plot of a FODO cell.]{The necktie plot of the FODO cell from \autoref{fig:limitsfodocell}, which is called so in regard to its shape. The areas of instability are crosshatched. The different configurations are marked with a colored cross.}
+	\label{fig:necktieplot}
+\end{figure}
+The stability of a lattice in linear order can be tested with the in \autoref{transformationofthetwissparameter} derived formula
+\begin{equation}\begin{aligned}[b]
+		2 - R_{11}^2 - 2 R_{12} R_{21} - R_{22}^2 > 0,
+	\end{aligned}\label{stablesolutions2}\end{equation}
+which is equivalent to that no periodic solution of the Twiss parameter exist. To get a deeper understanding of the lattice instabilities it is useful to take a look at a FODO cell, which consists of two quadrupole with drift spaces between them. We choose the first quadrupole to be horizontal focusing and the second one to be vertical focusing. In the following we will restrict our considerations to the horizontal plane. Here the first quadrupole has the effect of a focusing lens and the second one that of a defocusing lens. It also applies for the FODO cell that only certain configurations of the quadrupole strengths allow for a bound movement.
+
+The particle trajectories for the two limiting cases of a FODO cell are shown in \autoref{fig:limitsfodocell} and are marked in the stability plot in \autoref{fig:necktieplot}:
+\begin{itemize}
+	\item First particularly for low quadrupole strengths different quadrupole values lead to an instability. The first plot (1) shows the limiting case of a stable movement for a very weak focusing. The graphic below (3) shows what happens if the strength of second quadrupole is increased: The first quadrupole is not longer capable to compensate the strong defocussing and the beam diverges.
+
+	\item The second effect occurs for high quadrupole values. Even when the strengths of the magnets are equal. The second plot (2) of \autoref{fig:limitsfodocell} shows the particle trajectories for the limiting case of high quadrupole strengths. If the quadrupole strength is increased further, the focal length of the first quadrupole moves in front of the middle of the defocussing quadrupole (4). Particles with a positive transversal offset have now also a positive transversal slope (They had a negative slope in plot 2). This results in a stronger defocussing in the second quadrupole.
+\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-bessy2-stability-Q3T2.pdf}
+	\caption[Instability of the BESSY II storage ring lattice due to the changing of the Q3T2.]{Instability of the BESSY II storage ring lattice due to the changing of the Q3T2. The left side shows the current configuration of the storage ring (red marked in plot 1 of \autoref{fig:stabilitybessy2}). The shape of the beam is the same after each revolution. Only the position of the individual particle changes. This is because of a periodic solution of the beta function exists and therefore also the envelope must be periodic. The right side shows a lattice configuration with a slightly increased magnet(blue marked in plot 1 of \autoref{fig:stabilitybessy2}). The minimum of the beam envelope moves forward and causes and causes a stronger defocussing in the right side of the T2 section. This accumulates in the following revolutions and leads to an enormous grow of the beam size.}
+	\label{fig:stabilityq3}
+
+	\includegraphics[width = 0.85\textwidth]{images/05-stability-all.pdf}
+	\caption[The lattice stability for BESSY II.]{The lattice stability for BESSY II in dependence of different magnets. The current configuration is marked with a red cross. The first plot shows the lattice stability along the Q3T2 and Q5T2 magnet. The quadrupole strengths of the right side of \autoref{fig:stabilityq3} are marked with a blue cross. The second plot shows how the Q5T2 magnet can compensated with the Q4T2. In plot 3 the stable areas in dependence of the Q3T2 and Q4T2 for an unchanged Q5T2 are shown. The same for a switched off Q5T2 is shown in the last plot. The best configuration for a switched of Q5T2 is marked with a green cross.}
+	\label{fig:stabilitybessy2}
+\end{figure}
+
+\noindent This also explains why it was not possible to compensate the turnoff of the Q5T2 with the Q3T2 magnet. Similar to the FODO cell both magnets are vertical focusing and the Q4T2 between them is horizontal focusing. Therefore increasing the Q3T2 magnet to much leads to the second effect.
+
+The effect of the lattice instability on the individual particle trajectory is shown in \autoref{fig:stabilityq3}: The left side shows three revolutions of multiple particles in the T2 section for the stable standard lattice. The particle envelope - defined by the beta function - is the same for each round. This lattice is marked with a red cross in the subplots of \autoref{fig:stabilitybessy2}. Increasing the quadrupole strength of the Q3T2 drives the lattice in an instable area (blue cross in the first plot of \autoref{fig:stabilitybessy2}), where no periodic solutions for the Twiss parameter exist. Therefore no bound motion is not possible. This is shown in the right side of \autoref{fig:stabilityq3}: After one revolution the beam size has nearly doubled and will be lost by the third round.
+
+In addition to the tracking, different quadrupole scans of the storage ring were done, which are shown in \autoref{fig:stabilitybessy2}. The current configuration of the storage ring is marked with a red cross. The first plot shows the stability in dependency of the quadrupole strength of the Q3T2 and Q5T2. The stable area extends to the right from the current configuration($-k_{Q5T2} > 3$). Therefore the Q3T2 cannot compensate the turnoff of the Q5T2. The second plot shows the stability along the Q4T2 and Q5T2. As one can see, the stable area forms a tube, which stretches from the stable configuration to the left ($k_{Q5T2} = 0$). This confirms what we experienced at the machine. It was possible to turn off the Q5T2 step by step by compensating it with the Q4T2.
+
+The third plot shows the lattice stability in dependence of the quadrupole strength of the Q3T2 and Q4T2 with an unchanged Q5T2. Conspicuous here is the fact that there are two more stable areas. For both areas the Twiss parameter were calculated, but were significantly worse than the standard lattice. The left area (weaker Q3T2 magnet) has a very high vertical beta function. And the area below (weaker Q4T2) has an asymmetrical dispersion function.
+
+The fourth plot shows the same scan with a turned off Q5T2. There are four stable areas. All were tested in regard of the Twiss parameters. The optimal solution found is marked with a green cross and is further discussed in \autoref{sec:local-solution}.
+
+The quadrupole scans are a possibility to search for stable configuration. However they do not give any information about the quality of the found solutions. Therefore we could introduce a quality factor, which could be calculated from the height of the beta function and the change in tune. The problem with this is, that the computation time would be very large: We assume one iteration to calculate the transfer matrices, the Twiss parameter and the tune would take $t_1 = \SI{1}{\ms} $. If we want to scan the quadrupole in the neighborhood of $l = \SI{1}{\per\metre\tothe{2}}$ with a steps size $\Delta k = \SI{0.01}{\per\metre\tothe{2}}$, the computation of a single combination of $M = 6$ magnets would need
+
+\begin{equation}
+	t_{\textup{C}} = t_1 \cdot \left(\frac{l}{\Delta k}\right)^M = \SI{1}{\ms} \cdot \left(\frac{1}{0.01}\right)^6 \approx \SI{32}{a} .
+\end{equation}
+Another problem is that with increasing number of magnets, the dimension increases. Therefore the ratio of the solution space to the scanned space strongly depends on the interval of the scan. This can be illustrated at the example of a line with the length 1. It has 10\,\% of the \textit{volume} of a line with the length 10. A square with the edge length 1 has 1\,\% of the \textit{volume} of square with a edge length of 10. For a cube its 0,1\,\% and so on.
+
+This was also verified for a 2-cell FODO structure (2 horizontal and 2 vertical focusing magnets), which had the same element lengths as the FODO cell from \autoref{fig:limitsfodocell}. Thereby both horizontal and both vertical magnets once had the same quadrupole strength (2 dimensional scan) and once each magnet had its own quadrupole strength (4 dimensional scan). Then the structure was scanned for different quadrupole strength intervals. The ratio of stable solutions to the scanned configurations
+\begin{equation}
+	n = \frac{N_{\textup{stable}}}{N_{\textup{all}}}
+\end{equation}
+can be compared for the two and the four dimensional scans. The results are listed in the following table:
+\begin{table}[h!]
+	\centering
+	\footnotesize
+	\caption{Ratio of the solutions space to the scanned space}
+	\input{tables/scanproportian_notall_30.tex}
+\end{table}
+
+\noindent As one can see, the the ratio of stable solutions to the scanned configurations is mainly larger for the two dimensional scan. Only for well chosen intervals like $0 < k < 0.15$ the ratio of the four dimensional scan is larger. The reason therefore is that solutions space is increased more due to the new degrees of freedom than additional space is scanned. But as there is always only a limited solution space this is not the case for wider scans. Especially for $0 < k< 0.75$ and $0.15 < 0.50$ it can be seen that $\frac{n_2}{n_4}$ increases for larger intervals. As the solutions space in general is unknown (and not continuous), this means that for higher dimensions more and more of the scanned area will not be a solution. For this reasons it was decided to not use a scan to find a new lattice. However the discussed difficulties of many parameter problems are also of particular interest for the in the next subsection presented method.
+
+\subsection{Optimization of the lattice by minimization of a scalar function}
+Another possibility to optimize the lattice is to use a minimization method. Therefore we assign every set of parameters to a scalar value. This objective function could in principle be minimized by one of the many already existing optimization algorithms. The major challenge in our case is that the function does not varies smoothly, but has many areas where no solution exist. In these areas the algorithm has no information and cannot to converge. Therefore we have to make some restrictions for the optimization method.
+
+The first condition is, that the initial values must be in a stable area. Many optimization methods for finding the global minimum of a function rely on random start parameters and can therefore not be used offhand. As explained before in high dimension it is very unlikely to find a stable solution by chance\footnote{Random algorithms need, similar to the scan, boundaries. If these are not chosen perfect, the solution space will be many times smaller than the "random space".}. The algorithm would always start in an unstable area and had then to guess for the next direction, which is very similar to a random scan and is therefore no improvement.
+%Maybe there is any way to avoid this problems, but this would go beyond the scope of this thesis.
+
+Another difficulty is that the unstable areas lead to discontinuities in the minimization function. Optimization methods which are using the derivative can therefore cause an error during the optimization process. Because of this it was decided to use a more solid minimization method which provides reliable results and let the question of performance be secondary. After testing several methods of the scipy library~\cite{scipy} the downhill simplex algorithm from Nelder and Mead~\cite{NelderMead65} was chosen.
+
+The method is based on most simple volume spanned by N+1 points in the N-dimensional parameters space. This volume is also called simplex and is a line in one dimension, a triangle in two dimensions, a tetrahedron in the three dimensions and so on. In the simplest implementation of the Nelder–Mead method the function values of all N+1 points are calculated. Afterwards the worst point is mirrored on the center of the other points. This is repeated until the convergence criterion is reached. In the implementation of scipy library this is extended by other features, but this is not subject matter of this thesis.
+
+An advantage of the Nelder-Mead method is that it does not need the derivative and therefore avoids the argued difficulties of discontinuities. A huge disadvantage is that, like for many other optimization methods, it is possible to converge towards a local minimum. To reduce the risk of get stuck in such a local minimum, the optimizing procedure consists of three repetitions of the Nelder-Mead algorithm with different objective functions and three different sets of magnets. Thereby a reference lattice is needed. The optimizer tries to fit the lattice to this reference lattice by minimizing the differences of the lattice properties:
+
+\begin{enumerate}
+	% \small
+	\item The goal of the first repetition is to turn of the Q5T2 magnet. The Nelder-Mead algorithm is started in a stable area with the first set of magnets and the objective function
+	      \begin{equation}\begin{aligned}[b]
+			      f_1 = 10 \cdot ({k_{\textup{Q5T2}}})^{\frac{1}{4}} + \frac{\beta_{\textup{max}}}{\beta_{\textup{max,ref}}} + \frac{\overline{\beta}_{\textup{x,rel}} + \overline{\beta}_{\textup{y,rel}}}{2} ,
+		      \end{aligned}\label{function1}\end{equation}
+	      where the quadrupole strength $k_{\textup{Q5T2}}$ is multiplied with 10 and the fourth root is extracted\footnote{The quadrupole strength Q5 has to influence the objective function even for small values. As it is valid that $\lim\limits_{n \rightarrow \infty}{a^{\frac{1}{n}}} = 1$, this can be realized with a root function.} to ensure that the Q5 is turned off. We also need to calculate the maximum of both beta functions $\beta_{\textup{max}}$ and their mean relative residual to the reference beta function $\beta_{\textup{u,ref}}$:
+	      \begin{equation}\begin{aligned}[b]
+			      \overline{\beta}_{\textup{u,rel}} = \frac{1}{L} \int_{0}^{L} \du s \frac{\beta_{\textup{u}}}{\beta_{\textup{u,ref}}}
+		      \end{aligned}\label{relresidual}\end{equation}
+	      In addition to that the quadrupole strength of the Q5T2 magnet is reduced in each iteration by a fraction of its initial value.
+
+	\item In the second step the Q5T2 is already turned off. As initial parameters the final values of the first repetition are used. Now the beta function should be reduced while remaining the general symmetry of the reference lattice. Therefore we use a second set of magnets and the optimizing function
+	      \begin{equation}\begin{aligned}[b]
+			      f_2 =  \frac{\beta_{\textup{max}}}{\beta_{\textup{max,ref}}} + \frac{\overline{\beta}_{\textup{x,rel}} + \overline{\beta}_{\textup{y,rel}}}{2}.
+		      \end{aligned}\label{function2}\end{equation}
+	      The $\beta_{\textup{max}}$ term leads to a minimization of the maximal beta function. But this would not "punish" an increase of the beta function in areas, where the beta function is small. This is important especially for the straight sections and for the other in \autoref{reqfornewlattice} mentioned reasons. Therefore the second term is needed, which influences the objective function for large relative changes.
+
+	\item In the last step of the optimization process the tune should be adjusted to the reference lattice. Therefore we use a third set of magnets and the objective function
+	      \begin{equation}\begin{aligned}[b]
+			      f_3 = \frac{\beta_{\textup{max}}}{\beta_{\textup{max,ref}}} +  \frac{\overline{\beta}_{\textup{x,rel}} + \overline{\beta}_{\textup{y,rel}}}{2}  + 10 \cdot \left(|Q_{\textup{x}} - Q_{\textup{x,ref}}| +|Q_{\textup{y}} - Q_{\textup{y,ref}}|\right),
+		      \end{aligned}\label{function3}\end{equation}
+	      where the last term corresponds to the tune change. The weighting factor 10 is used to ensure that the algorithm converges in that way that the last term is zero.
+\end{enumerate}
+The three objective functions were found empirically, but turned out very reliable for many different combinations. The various sets of magnets and which of the three steps should used for the optimization procedure can be customized in the therefore written Fit GUI (For detailed information see \autoref{chapter:methodsandprograms}). It is also possible to repeat step 3 multiple times to find a better local minimum in the neighborhood. With this method many different combinations were tried. The best solutions were tested at the machine and are discussed in the next section.
+
+\section{Solutions with existing hardware} \label{sec:solutions-with-existing-hardware}
+This section covers the found solutions with existing hardware using the in \autoref{sec:methods} described optimization process. In \autoref{sec:local-solution} the local solution found by the minimization algorithm is discussed and compared to the empirical solution of \autoref{subsec:firstapproach}. In the next subsection the locality is increased step by step. The more degrees of freedom lead to a better compensation of the turnoff of the Q5T2. The last subsection presents the best found solution with existing hardware.
+
+For a better distinction the different solutions were named and are listed in \autoref{Vnaming}. The optimization results and the related plots of all versions are included in \autoref{chapter:allsolutions}.
+\begin{table}[htbp!]
+	\centering
+	\footnotesize
+	\caption{Working titles of the different solutions.}
+	\input{tables/naming_of_the_versions.tex}
+	\label{Vnaming}
+\end{table}
+
+
+
+\subsection{The local solutions V1 and V2} \label{sec:local-solution}
+The most local solution is to use only the Q3 and Q4 magnets within the T2 section to compensate the turnoff of the Q5T2. This was already done in the experimental approach of \autoref{subsec:firstapproach} and can now be tested in the simulations. The best found solution for a local compensation is plotted together with the current lattice in \autoref{fig:V1-comaprison2}. The results of the minimization process are listed in \autoref{V1results}:
+\begin{table}[htbp!]
+	\centering
+	\footnotesize
+	\caption{Output of the minimization method for the local compensation V1.}
+	\input{tables/V1_comparison_empirical.tex}
+	\label{V1results}
+\end{table}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/Overview-all-solutions/V1-comparison.pdf}
+	\caption{Comparison of the V1 lattice (solid) with the current standard lattice (dashed).}
+	\label{fig:V1-comaprison2}
+\end{figure}
+
+
+\noindent When turning off the Q5T2 only due to the compensation of the Q3T2 and Q4T2 especially the vertical beta function in the triplet sections T1, T3 and T6 is increased enormous. The changes of the horizontal beta function are not so high, but have a different slope in the straight sections. The maximal values of the horizontal and vertical beta functions are $\SI{32,34}{\meter}$ and $\SI{54.57}{\meter}$, respectively. The relative mean residuals are 1.08 for the horizontal and 1.43 for the vertical plane. The tune stays the same.
+
+The relative change in quadrupole strength of the simulation can be compared to the relative change of the power supply values of the first approach at the machine, which are also listed in \autoref{V1results}. It can be noticed, that the values of the simulations are very consistent with the experimental results.
+
+The next approach was to expand the locality and use the quadrupoles of the D2 and D3 sections. The optimization results are listed in \autoref{tab:V2results} and are plotted in comparison to the V1 optics in \autoref{fig:V1-vs-V2}.
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-V1_vs_V2.pdf}
+	\caption{Comparison of the V1 (dashed) and the V2 (solid) lattice.}
+	\label{fig:V1-vs-V2}
+\end{figure}
+\begin{table}[htbp!]
+	\centering
+	\footnotesize
+	\caption{Output of the minimization method for the extended local compensation V2.}
+	\input{tables/V2.tex}
+	\label{tab:V2results}
+\end{table}
+\newline It can be seen, that with the new DOFs it is possible to decrease the large beta function in the T1, T3 and T6 sections. The maximal values of the horizontal and vertical beta functions are $\SI{26.89}{\meter}$ and $\SI{26.89}{\meter}$, respectively. Also the slope in the straight sections is reduced and the overall lattice seems more symmetric.
+
+The V1 and V2 optics were tested at the machine commissioning week in middle of April. To transfer the simulations to the machine a conversion from the quadrupole strengths to the power supply values is needed. This could be done with the already existing conversion factors. To test the reliability of these conversion factors the strength of all quadrupoles were calculated from the power supply values and were compared to the $k$-values from the LOCO measurement. As the differences were relatively large, it was decided that the LOCO measurement can be trusted more and was therefore used to calculated new conversion factors.
+
+According to~\cite{hinterberger} the quadrupole strength
+\begin{equation}
+	k \approx \frac{2 q \mu_0 n}{p a^2} I \propto I,
+	\label{quadconversion}\end{equation}
+where $a$ corresponds to the aperture radius and $n$ to the coil numbers, is approximately proportional to the current values. Thus the new power supply can be calculated due to the new and old quadrupole strengths as well as by the old power supply values\footnote{\autoref{quadconversion} is only in approximation valid and could be a relevant source of error. To obtain a reliable conversion function it would be necessary to measure the quadrupole strength of every magnet for different power supply values.}:
+\begin{equation}
+	I_{\textup{new}} \approx \frac{k_{\textup{new}}}{k_{\textup{old}}} I_{\textup{old}}
+\end{equation}
+Therefore a small GUI was written, which can calculated the new power supply values for the particular version and can set them directly to the machine (See \autoref{chapter:methodsandprograms}). First the V1 optic was tested. It was possible to switch off the Q5. Thereby the injection efficiency was about 20\,\% to 30\,\%. To verify the conversion factors the optics were measured with LOCO. A comparison of the simulated and LOCO measured optics is shown in \autoref{fig:V1-LOCO-vs-SIM}. It can be noticed that the maxima in the T1, T4 and T6 section are significantly smaller.
+
+After that the V2 optics was tested. It was possible to increase the injection efficiency to about 35\,\%-43\,\%. The optics were again measured with LOCO (see \autoref{fig:V2-LOCO-vs-SIM}). Both Twiss parameter and quadrupoles strengths are very consistent. After the LOCO measurement, a high current test with the V2 optics was done. With a quick chromatic correction an injection efficiency up to 65\,\% and a lifetime of 4,7 hours was reached.
+
+\subsection{Intermediate solutions}
+\begin{table}
+	\centering
+	\footnotesize
+	\caption{Comparison of the Twiss parameter of the different version.}
+	\input{tables/V-comparison.tex}
+	\label{tab:comparisonofthedifferentversion}
+\end{table}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-V-versions-comparison.pdf}
+	\caption[Comparison of Twiss parameter of the different versions.]{Comparison of the Twissparameter of the different versions. The sections used to compensate the Q5T2 magnets are highlighted in blue.}
+	\label{fig:versioncomparison}
+\end{figure}
+To enhance the accuracy of the calculation of the power supply values a new LOCO measurement of the standard user optics was done. All further simulations are based on this LOCO measurement from 28.03.2017.
+
+Many different combinations of magnets were tested to compensate the switch off of the Q5T2. Thereby different initial parameters for each version were chosen to increase the probability that the best local minimum is found. The versions from V1 up to Vall extend the locality starting from the T2 section. A comparison of V1 up to Vall is shown in \autoref{fig:versioncomparison}. The versions V2Q3T, V2Q4T and V2Q5 use the respective quadrupoles to compensate the turnoff of the Q5T2. In the version VOF the quadrupoles of the T1 and T6 section are specifically chosen to counteract the effect of the reduction of the Q4T2 in these sections. The optimization results of all versions are listed in \autoref{tab:comparisonofthedifferentversion}.
+
+As one can see, the maximum of the horizontal and the vertical beta function decreases with the expanding of the locality from V1 up to V4. This is also valid for the mean residual of the beta function. The optimization results of the V5 optics seems worse then the V4 optics. The reason could be that with the increasing number of degrees of freedoms the number of local minima increases. The optimizer can converge into a higher local minimum, which is a weakness of the Nelder Mead algorithm.
+
+It was decided to test all optics from V1 up to the Vall in the machine commissioning week in middle of May 2017. To have a clean LOCO measurement and avoid hysteresis effects for the most promising version V4, it was tested first at the machine. The tune bump was used for small tune correction. The V4 optics were measured with LOCO to ensure that the quadrupole strength were transfered correctly to the machine. A comparison plot of the LOCO measured optics to simulated optics is shown in \autoref{fig:V4-LOCO-vs-SIM}. As one can see, the Twiss parameter of the LOCO measured optics and the simulated optics are concordant.
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-V4_LOCO_vs_SIM.pdf}
+	\caption{Comparison of V4 LOCO (solid) with V4 SIM (dashed).}
+	\label{fig:V4-LOCO-vs-SIM}
+\end{figure}
+
+After the LOCO measurement verified the linear optics, a first rough approach was done to optimize the non linear beam dynamics with the sextupoles. The aim was to increase the lifetime and injection efficiency. As shown in \cite{kuskeli} the momentum acceptance or the dynamic aperture can be measured using a phase acceptance scan. Thereby the injection efficiency is measured in dependence of the longitudinal phase of the injected bunch, which can be varied by changing the relative phase between the booster synchrotron and the storage ring.
+
+The harmonic sextupoles were used to enhance the phase acceptance. This was done by changing the relative phase between the injector and the storage to the limiting point of injection. At this point the effect of the sextupoles are well observable. The phase acceptance scan of the V4 optics is shown in \autoref{fig:V4-phase-scan}.
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.7\textwidth]{images/05-Phase-acceptance-V4-mai.pdf}
+	\caption[Phase acceptance scan of the V4 optics with SCIDs off.]{Phase acceptance scan of the V4 optics during the machine commissioning week in the middle of May. All superconducting IDs were off. The red line is the mean value for the particular phase.}
+	\label{fig:V4-phase-scan}
+\end{figure}
+It has to be noted that the initial sextupole setting was optimized for the standard user operation, where the superconducting IDs are turned on. For the presented phase scan they were switched off. Nevertheless, it was possible to reach injection efficiencies of about 95\,\%.
+
+Thereafter all optics were tested at the machine. The current was injected up to 150~mA while the injection efficiency was recored. The results are plotted in \autoref{fig:lifetimedifferentversion} and the mean injection efficiencies are listed in \autoref{tab:lifetimedifferentversion}. The mean injection efficiency for the V1 optics is 79.5\,\% and is increasing for each version up to the V4 optics with 96.5\,\% \footnote{It is important to note that the sextupoles were only optimized for the V4 optics.}. It is conspicuous that the injection efficiency for the V5 optics is only  50.1\,\% and is 75.9\,\% for the Vall optics. First it was assumed that this could be caused by hysteresis effects as the current of many magnets were changed often. But it was possible without further ado to load the V4 optics and reach 95.7\,\% again. Another reason could be that calculation of the power supply values for a magnet in the V5 optics was not correct. This could be the case if the conversion between the geometric quadrupole strength and the power supply value of a magnet is outside of the linear range. This would mean that a better conversion function for the power supply values is necessary.
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-injection_efficiency_all_version.pdf}
+	\caption[Comparison of the mean injection efficiency of the different version.]{Comparison of the mean injection efficiency of the different version  for an optimized sextupole setting for the V4 optics. The mean injection efficiency is marked with a red dashed line.}
+	\label{fig:lifetimedifferentversion}
+\end{figure}
+\begin{table}
+	\centering
+	\footnotesize
+	\caption{Comparison the mean injection efficiency of the different version.}
+	\input{tables/injection_efficiency_all_version.tex}
+	\label{tab:lifetimedifferentversion}
+\end{table}
+
+
+
+\subsection{The best solution found by the optimizer V4} \label{subsec:bestsolution}
+In the machine commissioning week of August the best obtained optics V4 was tested in comparison to the standard optics with superconducting IDs on. Thereby a phase acceptance scan of the standard optics and of the new V4 optics was done.
+
+%The machine was started with 70\,\% injection efficiency. All superconducting IDs were off. The tunes and orbit were stable. By changing the injection kicker and the injection septa the injection efficiency was increased to about 90\,\%. Afterwards the phase acceptance and the RF-acceptance scan of the not optimized standard optics were done. 
+
+As a check of consistency of the LOCO method the standard optics were also LOCO measured. A comparison of the Twiss parameter to the standard optics of the end of March is shown in \autoref{fig:standard-comparison} in the appendix. The Twiss parameter seem very concordant and confirm the reliability of the LOCO measurement.
+
+While the phase acceptance scan of the standard optics was done, a new V4 optics was computed on basis of the new LOCO measured the standard optics. The new V4 optics was transfered to the machine. The orbit correction was used to improve the orbit and a LOCO measurement of the V4 optics was done. A comparison of Twiss parameter of the simulated and LOCO measured optics is shown in \autoref{fig:V4-LOCO-vs-SIM_AUG} in the appendix.
+
+A comparison between the V4 optics and the standard optics is shown in \autoref{fig:V4_vs_standard_loco}. The horizontal beta function of the V4 optics seems very similar to that one of the standard optics. The vertical beta function is up to 8 meters higher in the T1, D2, T2 and D3 sections. Moreover the beta function increases in the middle of the T2 section from 2 meters to 4 meters. The vertical beta function could be further reduced by allowing a higher beta function in the adjoining DBA. Otherwise the horizontal beta function looks very similar to the standard optics. The horizontal dispersion function is almost identical.
+
+The harmonic sextupoles were used to optimize the phase acceptance of the V4 optics with superconducting IDs switched on. A comparison of the phase acceptance between the standard optics and the optimized V4 optics with superconducting IDs on is shown in \autoref{fig:comparison-phase-acceptance}\footnote{The data was measured by \cite{goslawski}.}. As one can see, the region with injection efficiency above 90\,\% is 0.65\,ns for the current standard user lattice and 0.45\,ns for the V4 optics. For the VSR project it is assumed that 0.8-1.0\,ns with 90\,\% injection efficiency is the needed to inject into the short bucket~\cite{atkinson}. By splitting up the sextupoles in the T2 straight this could be further improved. More detailed studies of the non linear beam dynamics are necessary.
+
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/05-V4_vs_standard_loco.pdf}
+	\caption[The loco measured V4 optics in comparison to the standard optics.]{The loco measured V4 optics (solid) in comparison to the standard optics (dashed).}
+	\label{fig:V4_vs_standard_loco}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.8\textwidth]{images/05-comparison-phase-acceptance_sep.pdf}
+	\caption[Comparison of the phase acceptance between the standard optics and the V4 optics with SCIDs on.]{Comparison of the phase accpetance between the standard optics and the V4 optics with SCIDs on. For reasons of clarity the error bars were left off.}
+	\label{fig:comparison-phase-acceptance}
+\end{figure}
+

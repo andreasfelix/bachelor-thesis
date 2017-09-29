@@ -1,0 +1,42 @@
+\chapter{Liouville's theorem} \label{appendixliouvillestheorem} 
+
+To derive Liouville's equation it is more convenient to use the canonical coordinates $q_i$ and the conjugate momenta $p_i$. The phase space distribution $\rho(\textbf{q},\textbf{p},t)$ determines the number of particles $\rho(\textbf{q},\textbf{p},t) \du^s q \du^s p$ in the phase space volume $\du^s q  \du^s p$. The temporal change of particles in a region $G$ equals the flux through its surface $\partial G$ \cite{nolting6}. Therefore we obtain
+\begin{equation}
+\frac{\partial}{\partial t}\int_G \du^s q \du^s p \: \rho(\textbf{q},\textbf{p},t) = - \int_{\partial G} \du \textbf{S} \: \textbf{v} \cdot \rho(\textbf{q},\textbf{p},t) ,
+\end{equation}
+where \textbf{v} corresponds to the phase space velocity 
+\begin{equation}
+\textbf{v} = ( \dot{q}_1, ... , \dot{q}_s ,  \dot{p}_1, ... , \dot{p}_s) .
+\end{equation}
+According to Gauss's theorem the surface integral can be transformed to a volume integral, where the nabla is that of the \textit{2s}-dimensional phase space:
+\begin{equation}
+\int_G \du^s q \du^s p \left(\frac{\partial}{\partial t} \rho(\textbf{q},\textbf{p},t) + \nabla \textbf{v} \rho(\textbf{q},\textbf{p},t) \right) = 0
+\label{liou1}\end{equation}
+As we have the freedom to choose any region $G$, even the integrand has to disappear. Substituting of $\nabla = (\partial_{q_1},...,\partial_{q_s},\partial_{p_1},...,\partial_{p_s})$ into the integrand of (\ref{liou1}) yields
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \sum_{i=1}^{s} \left(\frac{\partial \rho}{\partial q_i} \dot{q}_i+ \frac{\partial \rho}{\partial p_j} \dot{p}_i \right) + \rho \sum_{i=1}^{s}\left(\frac{\partial \dot{q}_i}{\partial q_i} +\frac{\partial \dot{p}_i}{\partial p_i} \right) = 0,
+\end{equation}
+where the second sum vanishes because of the Hamilton's equations $\dot{q} = \frac{\partial H}{\partial p}$ and $\dot{p} = -\frac{\partial H}{\partial q}$. This leads us to
+\begin{equation}
+\frac{\du \rho}{\du t} = \frac{\partial \rho}{\partial t} + \sum_{i=1}^{s} \left(\frac{\partial \rho}{\partial q_i} \dot{q}_i + \frac{\partial \rho}{\partial p_j} \dot{p}_i \right) = 0,
+\end{equation}
+which is known as Liouville's equation. It states that the phase space distribution along any path stays constant. Consequently also the volume of any area $G$, which moves through phase space, remains constant for all time\footnote{Identical particles with the same Hamiltonian can not cross in phase space. Therefore the inner and outer points of the region $G$ cannot to propagate through the surface area $\partial G$. Thus the number of phase space points within $G$ stays constant. As the phase space distribution is constant, the phase space volume of $G$ must be conserved.}. As we notice from the transfer matrices of \autoref{sectiontransfermatrix} the motion in the transversal planes decouples. Therefore the represented statements must already be true for the individual transversal dimensions. Besides that the Liouville's theorem does not make any statement about the shape of the area $G$, which can change over time.
+
+The Liouville's theorem was tested for the time dependent Hamilton function:
+\begin{equation}
+H(q,p,t) = \frac{p^2}{2} + 2 t p  + \frac{\sin{q}}{2} - q \sqrt{t}
+\end{equation}
+The time evolution of the system is given by the Hamilton equations:
+\begin{equation}\begin{aligned}[b]
+\dot{q} &= \frac{\partial H}{\partial \textbf{p}} = p + 2 t\\
+\dot{p} &= -\frac{\partial H}{\partial \textbf{q}} = - \frac{\cos{q}}{2} + \sqrt{t}
+\end{aligned}\end{equation}
+In \autoref{fig:liouvilleconstantvolume} the transformation of the area $G_0$ to $G_t$ after the time t is shown. In addition to that the trajectories of particles, which started within area $G_0$, are plotted. As one can see, the particles trajectories end within the area $G_t$ after the time t. Therefore the number of particles N within the area are constant. As the volume V remains the same the phase space density $p=\frac{N}{V}$ is, in accordance to Liouville's theorem, time independent.
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/A-liouville-theorem-constant-volume.pdf}
+	\caption[Transformation of an arbitrary area in phase space.]{The ellipse $G_0$ is transformed to the the area $G_1$ after the time $t$. Additionally the individual trajectories for the red marked particles are shown.}
+	\label{fig:liouvilleconstantvolume}
+\end{figure}
+
+

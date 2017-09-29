@@ -1,0 +1,402 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis 
+% LaTeX Template
+% Version 2.4 (22/11/16)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Version 2.x major modifications by:
+% Vel (vel@latextemplates.com)
+%
+% This template is based on a template by:
+% Steve Gunn (http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/)
+% Sunil Patel (http://www.sunilpatel.co.uk/thesis-template/)
+%
+% Template license:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	FELIX NEWCOMMANDS
+%----------------------------------------------------------------------------------------
+% equalsign with space
+\def\eq{\ensuremath{&\quad=\quad}}
+% unit vector
+\def\uvec#1{\ensuremath{\hat{\mathbf{e}}_{\textup{#1}}}}
+% The number `e'.
+\def\eu{\ensuremath{\mathrm{e}}}
+% The imaginary unit.
+\def\iu{\ensuremath{\mathrm{i}}}
+% The differential operator.
+\def\du{\ensuremath{\mathrm{d}}}
+% kappax0
+\def\kap{\ensuremath{\mathrm{\kappa_{\textup{x}0}}}}
+% kappay0
+\def\kapy{\ensuremath{\mathrm{\kappa_{\textup{y}0}}}}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+10pt, % The default document font size, options: 10pt, 11pt, 12pt
+%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+english, % ngerman for German
+singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+%headsepline, % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+]{MastersDoctoralThesis} % The class file specifying the document structure
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{libertine}
+\usepackage[libertine,cmintegrals,cmbraces,vvarbb]{newtxmath}
+\usepackage{bookmark} % add contents to bookmarks
+\usepackage{listings} % include code
+\lstset{
+	basicstyle=\footnotesize, % alle listings winzig drucken (meine Standardeinstellung)
+	keywordstyle=\color{black}\bfseries, % Schlüsselwörter fett und schwarz drucken
+	commentstyle=\color{blue},% Kommentare blau drucken}
+	showstringspaces=false} % Strings im Code ohne Kenntlichmachung von Leerzeichen - finde ich angebracht und empfehlenswert
+
+\usepackage[backend=bibtex, style=numeric, natbib=true, isbn=false, backref=true, sorting=none, url=false]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\addbibresource{bibliography.bib} % The filename of the bibliography
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+
+%----------------------------------------------------------------------------------------
+%	FELIX PACKAGES
+%----------------------------------------------------------------------------------------
+%\usepackage{amsmath}
+\usepackage{sidecap} % captions beside figure with \begin{SCfigure}
+\usepackage[hang]{footmisc}
+\usepackage{rotating} % landscape figure
+\usepackage{pdflscape}
+\urlstyle{same} % url schrift normal
+\usepackage[export]{adjustbox} % algin two side by side graphics, for example top align
+%\usepackage{flafter} % avoids that figures are floated before they were defined
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=3.8cm, % Outer margin
+	bindingoffset=.5cm, % Binding offset
+	top=1.5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+%	showframe, % Uncomment to show how the type block is set on the page
+}
+	
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+\newcommand{\ttitle}{Optimization of the BESSY II optics for the VSR project - Increase the installation length for the VSR cryomodule in the T2 section of the BESSY~II storage ring} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{Prof. Dr. Andreas \textsc{Jankowiak}\\Dr. Paul \textsc{Goslawski}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
+\degree{ Bachelor of Science (B. Sc.)} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
+\author{Felix \textsc{Andreas}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
+
+\subject{Physics} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
+\keywords{Physics} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
+\university{\href{http://hu-berlin.de}{Humboldt-Universität zu Berlin}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
+\department{\href{https://www.physik.hu-berlin.de/en/department}{Department of Physics}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\group{\href{http://www.helmholtz-berlin.de/forschung/oe/fg/beschleunigerphysik/}{Institute for Accelerator Physics}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\faculty{\href{https://www.hu-berlin.de/en/institutions/faculties-and-departments/mathematics-natural-sciences}{Faculty of Mathematics and Natural Sciences}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
+
+\AtBeginDocument{
+\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+\hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
+\hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
+}
+
+\begin{document}
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\newgeometry{hmarginratio=1:1} %seite nicht einrücken
+\begin{titlepage}
+	\pdfbookmark{Title page}{Title page}
+	\begin{center}
+		\begin{figure}\includegraphics[width = \linewidth]{images/hulogo/hukombi_bbw_op}\end{figure}
+		\vspace*{.06\textheight}
+		%{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
+		\textsc{\Large Bachelor Thesis}\\[0.5cm] % Thesis type
+
+		%\HRule \\[0.4cm] % Horizontal line
+		\vspace{0.4cm}{\Large \bfseries \ttitle\par}\vspace{0.4cm}\vspace{1.5cm} % Thesis title
+		%\HRule \\[1.5cm] % Horizontal line
+
+		\begin{minipage}[t]{0.42\textwidth}
+			\begin{flushleft} \large
+				\emph{Author:}\\
+				\href{felix.andreas@physik.hu-berlin.de}{\authorname} % Author name - remove the \href bracket to remove the link
+			\end{flushleft}
+		\end{minipage}
+		\begin{minipage}[t]{0.42\textwidth}
+			\begin{flushright} \large
+				\emph{Supervisor:} \\
+				\href{http://}{\supname} % Supervisor name - remove the \href bracket to remove the link  
+			\end{flushright}
+		\end{minipage}\\[2cm]
+
+		\vfill
+
+		\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+		\textit{in the}\\[0.4cm]
+		\facname\\\deptname\\[2cm] % Research group name and department name
+
+		\vfill
+
+		{\large \today}\\[4cm] % Date
+		%\includegraphics{width = 0.3\linewidth]{images/hulogo/husiegel_bw} % University/department logo - uncomment to place it
+
+		\vfill
+	\end{center}
+\end{titlepage}
+\restoregeometry
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+	\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+	BESSY\,II is a third generation synchrotron light source located in Berlin Adlershof. It purpose is to provide extremely brilliant synchrotron light pulses in the range from long terahertz radiation to hard X-rays. In the last several years, there is a continuously increasing interest in the short pulse operation. Therefore the next major upgrade is to enable a storage ring with short and long pulses, simultaneously. This variable pulse-length storage ring can be achieved due to the installation of additional superconducting high gradient cavities. The cavities will be assembled into one cryomodule in the T2 section of the storage ring. As this module needs more space then initially assumed, the idea is to remove two quadrupoles to gain installation length. Linear beam optics computations with an optimization method were used to switch off the quadrupoles in simulations. The different theoretical optics obtained were transfered to the storage ring. For the best solution it was possible to store high current with reasonable injection efficiency and lifetime. The proposed optics of this thesis has to be further optimized in regards to non-linear beam dynamics, but has shown that an enlargement of the installation length is possible.
+\end{abstract}
+
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+\begin{otherlanguage}{ngerman}
+	\begin{abstract}
+		%\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+		BESSY\,II ist eine Synchrotronstrahlungsquelle der dritten Generation am Standort Adlershof, welche extrem brilliante Synchrotronpulse im Bereich von langer Terahertzstrahlung bis hin zur harter Röntgenstrahlung erzeugt. Seit mehreren Jahren gibt es ein kontinuierlich zunehmendes Interesse am Betrieb mit ultrakurzen Pulsen. Daher soll mit dem nächsten großen Upgrade die gleichzeitige Erzeugung von kurzen und langen Pulse im Speicherring ermöglicht werden. Dieser Variable Pulslängen-Speicherring kann durch den Einbau zusätzlicher stark fokussierender supraleitender Kavitäten realisiert werden. Diese Kavitäten werden in ein Kryomodul in der T2 Geraden des Speicherringes eingebaut. Da dieses Modul mehr Platz braucht als zunächst angenommen, ist die Idee, zwei Quadrupole auszubauen, um an Einbaulänge zu gewinnen. Mithilfe von linearer Strahloptik und einer Optimierungsmethode wurden die Quadrupole in Simulationen ausgeschaltet. Anschließend wurden die verschiedenen theoretischen Optiken am Speicherring getested. Die beste Lösung ermöglichte das Speichern eines hohen Strom mit guter Injektionseffizienz und Lebensdauer. Die vorgeschlagene Optik dieser Arbeit muss in Bezug auf nichtlineare Strahldynamik weiter optimiert werden, zeigt aber, dass eine Vergrößerung der Einbaulänge möglich ist.
+	\end{abstract}
+\end{otherlanguage}
+
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\begin{acknowledgements}
+	\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+	An erster Stelle möchte ich mich bei Herrn Professor Andreas Jankowiak bedanken, dass er mir ermöglicht hat, diese Arbeit am Helmholtz-Zentrum Berlin durchzuführen und dass er selbige begutachtet.\\
+
+	\noindent Mein größter Dank geht an Dr. Paul Goslawski, der mich mit viel Engagement richtungsweisend bei meiner Arbeit begleitet hat. Vielen Dank für die Einführung in die Arbeitsgruppe, für zahlreiche Anmerkungen und Kommentare, für deine Ausdauer bei den langen nächtlichen Experimenten und vor Allem für die vielen spannenden physikalischen Diskussionen.\\
+
+	\noindent Ich möchte mich bei Felix Kramer bedanken, der mir bei der Einfindung in die Arbeitsumgebung des Instituts sehr geholfen hat. Danke außerdem für viele Anregungen und Ideen.\\
+
+	\noindent Ich bedanke mich bei meinen Eltern für den motivierenden Beistand und dass sie mir dieses Studium ermöglicht haben.
+
+
+\end{acknowledgements}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+\cleardoublepage
+\pdfbookmark[chapter]{\contentsname}{toc}
+\tableofcontents % Prints the main table of contents
+
+\cleardoublepage
+\pdfbookmark{List of Figures}{List of Figures}
+\listoffigures % Prints the list of figures
+
+\cleardoublepage
+\pdfbookmark{List of Tables}{List of Tables}
+\listoftables % Prints the list of tables
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+\cleardoublepage
+\pdfbookmark{Abbreviations}{Abbreviations}
+\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
+
+	\textbf{BESSY} & \textbf{B}erliner \textbf{E}lektronen\textbf{S}peicherring-Gesellschaft für \textbf{SY}nchrotronstrahlung m.b.H.\\\\
+
+	\textbf{BPM} &  \textbf{B}eam \textbf{P}osition \textbf{M}onitor\\\\
+
+	\textbf{DBA} & \textbf{D}ouble \textbf{B}end \textbf{A}chromat\\\\
+
+	\textbf{DOF} & \textbf{D}egree \textbf{O}f \textbf{F}reedom\\\\
+
+	\textbf{ELEGANT} & \textbf{ELE}ctron \textbf{G}eneration \textbf{AN}d \textbf{T}racking\\\\
+
+	% \textbf{ELEMENT} & \textbf{ELE}ctron Bea\textbf{M} \textbf{E}ssentials A\textbf{N}d \textbf{T}racking\\\\
+
+	\textbf{EPICS} & \textbf{E}xperimental \textbf{P}hysics and \textbf{I}ndustrial \textbf{C}ontrol \textbf{S}ystem\\\\
+
+	\textbf{FODO} & A \textbf{F}ocusing n\textbf{O}t focusing  \textbf{D}efocusing n\textbf{O}t focusing magnet structure\\\\
+
+	\textbf{GUI} & \textbf{G}raphical \textbf{U}ser \textbf{I}nterface\\\\
+
+	\textbf{HZB} & \textbf{H}elmholtz-\textbf{Z}entrum \textbf{B}erlin\\\\
+
+	\textbf{ID} & \textbf{I}nsertion \textbf{D}evice\\\\
+
+	\textbf{LOCO} &  \textbf{L}inear \textbf{O}ptics from \textbf{C}losed \textbf{O}rbits\\\\
+
+	\textbf{MML} & \textbf{M}atLab \textbf{M}iddle \textbf{L}ayer\\\\
+
+	\textbf{RF} & \textbf{R}adio \textbf{F}requency\\\\
+
+	\textbf{VSR} & \textbf{V}ariable pulse length \textbf{S}torage \textbf{R}ing\\\\
+
+
+\end{abbreviations}
+
+%----------------------------------------------------------------------------------------
+%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+%\begin{constants}{lr@{${}={}$}l} % The list of physical constants is a three column table
+
+% The \SI{}{} command is provided by the siunitx package, see its documentation for instructions on how to use it
+
+%Speed of Light & $c_{0}$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
+%Constant Name & $Symbol$ & $Constant Value$ with units\\
+
+%\end{constants}
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS
+%----------------------------------------------------------------------------------------
+\cleardoublepage
+\pdfbookmark{List of Symbols}{List of Symbols}
+
+\begin{symbols}{lll} % Include a list of Symbols (a three column table)
+	%Symbol & Name & Unit \\
+	$c$ & Speed of light & \si{\meter\per\second} \\
+	$e$ & Elementary charge & \si{\coulomb} \\
+	$k$ & Quadrupole strength & \si{\per\square\meter} \\
+	$p$ & Momentum & \si{\kilogram\meter\per\second}\\
+	$t$ & Time & \si{\second}\\
+	$\beta$ & velocity in units of the speed of light & \si{1}\\
+	$\gamma$ & Lorentz factor & \si{1}\\
+	\addlinespace
+	$\textbf{B}$ & Magnetic flux density & \si{\tesla}\\
+	$\textbf{E}$ & Electric field & \si{\volt\per\meter}\\
+	$\textbf{F}$ & Force & \si{\kilogram\meter\per\square\second}\\
+	\addlinespace % Gap to separate the Roman symbols from the Greek
+	$\beta_{\textup{x,y}}$ & horizontal, vertical betatron function & \si{\meter} \\
+	$\alpha_{\textup{x,y}}$ & horizontal, vertical alpha function & \si{1} \\
+	$\gamma_{\textup{x,y}}$ & horizontal, vertical gamma function & \si{\per \meter} \\
+	$\epsilon_{\textup{x,y}}$ & horizontal, vertical emittance  & \si{\meter} \\
+	$\psi_{\textup{x,y}}$ & horizontal, vertical betatron phase  & \si{1} \\
+	$Q_{\textup{x,y}}$ & horizontal, vertical tune & \si{1} \\
+	$\eta_{\textup{x,y}}$ & horizontal, vertical dispersion function  & \si{\meter} \\
+	$\alpha_\textup{c}$  & Momentum compaction factor & \si{1} \\
+	\addlinespace
+	$\textbf{X}$ & 6D particle vector & various\\
+	$\uvec{x}$ & normal (horizontal) unit vector & \si{\meter}\\
+	$\uvec{y}$ & binormal (vertical) unit vector & \si{\meter}\\
+	$\uvec{s}$ & tangent unit vector & \si{\meter}\\
+	$\uvec{z}$ & unit vector of the particle velocity & \si{\meter}\\
+	$x$ & horizontal spatial offset & \si{\meter}\\
+	$y$ & vertical spatial offset & \si{\meter}\\
+	$s$ & orbit position & \si{\meter}\\
+	$z$ & position on the individual particle trajectory & \si{\meter}\\
+	$\delta$ & relative momentum deviation& \si{1}\\
+	$l$ & longitudinal offset & \si{\meter}\\
+	$\rho_{\textup{x0}}, \rho_{\textup{y0}}$ & horizontal, vertical radius of curvature of the orbit& \si{\meter} \\
+	$\rho_{\textup{x}}, \rho_{\textup{y}}$ & horizontal, vertical radius of curvature of the particle trajectory& \si{\meter} \\
+	$\kappa_{\textup{x0}}, \kappa_{\textup{y0}}$ & horizontal, vertical curvature of the orbit& \si{\per \meter} \\
+	$\kappa_{\textup{x}}, \kappa_{\textup{y}}$ & horizontal, vertical curvature of the particle trajectory& \si{\per \meter} \\
+
+
+\end{symbols}
+
+%%----------------------------------------------------------------------------------------
+%%	DEDICATION
+%%----------------------------------------------------------------------------------------
+%
+%\dedicatpdflatex', actual output 'thesory{Dedicated to me, myself and I.} 
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{thesis} % Return the page headers back to the "thesis" style
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\include{chapters/01-Introduction}
+\include{chapters/02-Theory_of_linear_beam_optics}
+\include{chapters/03-Lattice_of-the-BESSY_II_storage_ring}
+\include{chapters/04-Simulations-and-measurements}
+\include{chapters/05-Conclusion}
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+\include{appendices/Appendix-Tools-and-programs}
+\include{appendices/Appendix-Edge_focusing}
+\include{appendices/Appendix-Liouvilles_theorem}
+\include{appendices/Appendix-All-solutions}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\renewcommand*{\newunitpunct}{\addcomma\space} % komma statt punkt
+\printbibliography[heading=bibintoc]
+
+
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%----------------------------------------------------------------------------------------
+\begin{declaration}
+	\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
+
+	\noindent I, \authorname, declare that this thesis and the work presented in it are my own. I confirm that where I have quoted from the work of others, the source is always given.
+	%\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
+	%
+	%\begin{itemize} 
+	%\item This work was done wholly or mainly while in candidature for a research degree at this University.
+	%\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+	%\item Where I have consulted the published work of others, this is always clearly attributed.
+	%\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+	%\item I have acknowledged all main sources of help.
+	%\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+	%\end{itemize}
+	% 
+	\vspace{3cm}
+
+	\noindent Signature:\\
+	\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
+
+	\noindent Place, Date: \hspace{3cm}Berlin, \today\\
+	\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
+\end{declaration}
+
+\cleardoublepage
+
+\end{document}

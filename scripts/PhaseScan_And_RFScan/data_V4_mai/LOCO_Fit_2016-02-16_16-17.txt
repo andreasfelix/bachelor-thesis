@@ -1,0 +1,93 @@
+bessyanalyselocodata
+Name of loco File: /net/opic11c/srv/OPI/accLab_svn/machine/BESSYII/StorageRingData/Multibunch/LOCO/2016-02-16/16-17-32/locoinputfile.mat
+Final Chi^2/DoF: 0.056109
+
+Average horizontal BPM gain: 0.902361, standard deviation: 0.069221
+Average vertical   BPM gain: 1.009989, standard deviation: 0.089323
+Average kick strength for hb  steerers: -0.019608 mrad, standard deviation: 0.000852 mrad
+Average kick strength for hs1 steerers: -0.011459 mrad, standard deviation: 0.000266 mrad
+Average kick strength for hs4 steerers: -0.009174 mrad, standard deviation: 0.000523 mrad
+
+Average kick strength for vcm steerers:  0.017735 mrad, standard deviation: 0.001005 mrad
+
+Resulting Fit parameters:
+
+   Quadrupole parameter fits by power supply
+   (QUAD) Fit parameter:  1, power supply name: Q1PDR, value:  2.441345 1/m^2
+   (QUAD) Fit parameter:  2, power supply name: Q1PTR, value:  2.428886 1/m^2
+   (QUAD) Fit parameter:  3, power supply name: Q2PDR, value: -1.811466 1/m^2
+   (QUAD) Fit parameter:  4, power supply name: Q2PTR, value: -1.847941 1/m^2
+   (QUAD) Fit parameter:  5, power supply name: Q3P1T1R, value: -2.570621 1/m^2
+   (QUAD) Fit parameter:  6, power supply name: Q3P1T6R, value: -2.697398 1/m^2
+   (QUAD) Fit parameter:  7, power supply name: Q3P1T8R, value: -2.506776 1/m^2
+   (QUAD) Fit parameter:  8, power supply name: Q3P2T1R, value: -2.491591 1/m^2
+   (QUAD) Fit parameter:  9, power supply name: Q3P2T6R, value: -2.126156 1/m^2
+   (QUAD) Fit parameter: 10, power supply name: Q3P2T8R, value: -2.615681 1/m^2
+   (QUAD) Fit parameter: 11, power supply name: Q3PD1R, value: -2.091947 1/m^2
+   (QUAD) Fit parameter: 12, power supply name: Q3PD2R, value: -2.137584 1/m^2
+   (QUAD) Fit parameter: 13, power supply name: Q3PD3R, value: -2.139319 1/m^2
+   (QUAD) Fit parameter: 14, power supply name: Q3PD4R, value: -2.163775 1/m^2
+   (QUAD) Fit parameter: 15, power supply name: Q3PD5R, value: -2.120644 1/m^2
+   (QUAD) Fit parameter: 16, power supply name: Q3PD6R, value: -2.033957 1/m^2
+   (QUAD) Fit parameter: 17, power supply name: Q3PD7R, value: -2.068327 1/m^2
+   (QUAD) Fit parameter: 18, power supply name: Q3PD8R, value: -2.106994 1/m^2
+   (QUAD) Fit parameter: 19, power supply name: Q3PT2R, value: -2.468955 1/m^2
+   (QUAD) Fit parameter: 20, power supply name: Q3PT3R, value: -2.440651 1/m^2
+   (QUAD) Fit parameter: 21, power supply name: Q3PT4R, value: -2.477944 1/m^2
+   (QUAD) Fit parameter: 22, power supply name: Q3PT5R, value: -2.518580 1/m^2
+   (QUAD) Fit parameter: 23, power supply name: Q3PT7R, value: -2.524000 1/m^2
+   (QUAD) Fit parameter: 24, power supply name: Q4P1T1R, value:  2.619408 1/m^2
+   (QUAD) Fit parameter: 25, power supply name: Q4P1T6R, value:  2.481138 1/m^2
+   (QUAD) Fit parameter: 26, power supply name: Q4P1T8R, value:  2.547075 1/m^2
+   (QUAD) Fit parameter: 27, power supply name: Q4P2T1R, value:  2.565015 1/m^2
+   (QUAD) Fit parameter: 28, power supply name: Q4P2T6R, value:  2.753069 1/m^2
+   (QUAD) Fit parameter: 29, power supply name: Q4P2T8R, value:  2.606913 1/m^2
+   (QUAD) Fit parameter: 30, power supply name: Q4PD1R, value:  1.437220 1/m^2
+   (QUAD) Fit parameter: 31, power supply name: Q4PD2R, value:  1.467431 1/m^2
+   (QUAD) Fit parameter: 32, power supply name: Q4PD3R, value:  1.478328 1/m^2
+   (QUAD) Fit parameter: 33, power supply name: Q4PD4R, value:  1.499736 1/m^2
+   (QUAD) Fit parameter: 34, power supply name: Q4PD5R, value:  1.487169 1/m^2
+   (QUAD) Fit parameter: 35, power supply name: Q4PD6R, value:  1.437630 1/m^2
+   (QUAD) Fit parameter: 36, power supply name: Q4PD7R, value:  1.444466 1/m^2
+   (QUAD) Fit parameter: 37, power supply name: Q4PD8R, value:  1.490114 1/m^2
+   (QUAD) Fit parameter: 38, power supply name: Q4PT2R, value:  2.580034 1/m^2
+   (QUAD) Fit parameter: 39, power supply name: Q4PT3R, value:  2.571272 1/m^2
+   (QUAD) Fit parameter: 40, power supply name: Q4PT4R, value:  2.557898 1/m^2
+   (QUAD) Fit parameter: 41, power supply name: Q4PT5R, value:  2.569282 1/m^2
+   (QUAD) Fit parameter: 42, power supply name: Q4PT7R, value:  2.562848 1/m^2
+   (QUAD) Fit parameter: 43, power supply name: Q5P1T1R, value: -2.334178 1/m^2
+   (QUAD) Fit parameter: 44, power supply name: Q5P1T6R, value: -2.040861 1/m^2
+   (QUAD) Fit parameter: 45, power supply name: Q5P1T8R, value: -2.425387 1/m^2
+   (QUAD) Fit parameter: 46, power supply name: Q5P2T1R, value: -2.489902 1/m^2
+   (QUAD) Fit parameter: 47, power supply name: Q5P2T6R, value: -3.712677 1/m^2
+   (QUAD) Fit parameter: 48, power supply name: Q5P2T8R, value: -2.273081 1/m^2
+   (QUAD) Fit parameter: 49, power supply name: Q5PT2R, value: -2.583097 1/m^2
+   (QUAD) Fit parameter: 50, power supply name: Q5PT3R, value: -2.601676 1/m^2
+   (QUAD) Fit parameter: 51, power supply name: Q5PT4R, value: -2.498706 1/m^2
+   (QUAD) Fit parameter: 52, power supply name: Q5PT5R, value: -2.523007 1/m^2
+   (QUAD) Fit parameter: 53, power supply name: Q5PT7R, value: -2.462241 1/m^2
+
+   No coupling fits.
+
+
+Conversion factors:
+Conversion factors for horizontal corrector magnets:
+hb : average current I:  0.070000 A, conversion factor: -0.280111 mrad/A, -0.00158887 Tm/A
+hs1: average current I:  0.011667 A, conversion factor: -0.982200 mrad/A, -0.00557133 Tm/A
+hs4: average current I:  0.011667 A, conversion factor: -0.786324 mrad/A, -0.00446026 Tm/A
+
+Conversion factors for vertical corrector magnets:
+vcm: average current I:  0.035000 A, conversion factor:  0.506716 mrad/A,  0.00287424 Tm/A
+Q1
+Q2
+Q3
+Q4
+Q5
+CQS
+
+
+ans =
+
+   -0.0016   -0.0056   -0.0045
+
+diary off

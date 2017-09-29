@@ -1,0 +1,164 @@
+\chapter{Tools and programs}\label{chapter:methodsandprograms}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.85 \textwidth]{images/04-Flowchart-serif.pdf}
+\caption[Workflow to find a new lattice for the BESSY II Storage ring]{Workflow to find a new lattice for the BESSY II Storage ring: Measure the current lattice with the ACCLAB toolbox. Transfer the data and find a new lattice in simulations. Afterwards the Simulations have to be verified at the machine.}
+\label{fig:flowchartworkflow}
+\end{figure}
+
+This chapter depicts the most important tools which were used to optimize the optics in regards to the BESSY-VSR project. To have a good starting point it is substantial to have a precise measurement of the current lattice. This 
+can be done with the LOCO method~\cite{mmlbasedloco} from the MatLab Middle Layer~\cite{mml,mmlpaper}. The quadrupole strengths fitted to the lattice model can be extracted with a simple GUI based on Martin Ruprechts mmltools~\cite{Rubrecht} (MatLab Middle Layer tools). The output data is a lattice file, which contains the position, length and multipole strength of all magnets without the IDs. 
+
+Afterwards the data gets imported to python, where the Twiss parameter are computed. In the Twiss GUI different lattices can be compared. Also it is possible to change the quadrupole strength within GUI and see the influence on the Twiss parameter immediately. This allows more direct experience in the process of understanding and finding a new lattice. Besides that a fit program was written, which tried to minimize the beta function while remaining the horizontal and vertical tune.
+
+When a new lattice was found the quadrupole strengths were converted to power supply values with conversion factors obtained by the old power supply values of the LOCO measurement. Therefore a small GUI program was written, so that the new power supply values can be directly set via EPICS to the BESSY II storage ring.
+
+The work routine and steps to find a new lattice are visualized in \autoref{fig:flowchartworkflow} and summed up in the subsequent list:
+
+\begin{enumerate}
+	\small
+	\item Measurement of the current Bessy II lattice
+	\begin{enumerate}
+		\item LOCO measurement with the MatLab Middle Layer
+		\item Fit the LOCO data with MatLab Middle Layer
+		\item Build a new .lte lattice file (based on Martin Rubrecht's mmltools)
+	\end{enumerate}
+	\item Calculate and plot Twiss parameter of the current lattice
+	\begin{enumerate}
+		\item Create python lattice object from lattice file 
+		\item Computation of the Twiss parameter
+		\item Visualization and comparison of the different lattices with the Twiss GUI
+	\end{enumerate}
+	\item Turn off the Q5T2 magnets in simulations and find new lattice
+	\begin{enumerate}
+		\item Turn off the Q5T2 magnets in the Twiss GUI
+		\item Optimize the optics by fitting the quadrupole values with the Nelder-Mead method
+	\end{enumerate}
+	\item Transfer the new lattice to the machine 
+	\begin{enumerate}
+		\item Calculate the new power supply values from the new lattice file with conversion factors obtained by the old power supply values of the LOCO measurement
+		\item Set the new power supply values to the BESSY II storage ring
+	\end{enumerate}
+\end{enumerate}
+
+\section{Python tools}
+All additional software was written in Python and is available under:
+\begin{center}
+\url{https://github.com/andreasfelix/element}
+\end{center}
+Thereby different programming libraries were used. Vector and matrix multiplications were done with numpy~\cite{numpy}, which relies on BLAS and LAPACK and therefore provides an efficient implementation of linear algebra computations. Matplotlib~\cite{matplotlib} was usesd as plotting library. Its object oriented API makes it convenient to use for a interactive graphical user interface. Furthermore various functions of the scipy libary~\cite{scipy} were used.
+\subsection*{Extract the quadrupole values from MatLab}
+The quadrupole values from the MatLab Accelerator Toolbox can be extracted with the mmltools~\cite{Rubrecht}. This can be done with:
+\begin{lstlisting}[language=Python]
+lwa = mmltools.ATRingWithAO('ATRingWithAO.mat')
+lwa.getMagnetStrength(fitIteration='last', method='byPowerSupply', outputstyle='elegant')
+\end{lstlisting}
+The program was extended by a GUI and in such a way that output is a complete lattice file. The input format for the python tool was chosen identical to the elegant format .lte. This preserves a convenient workflow and also allows the direct implementation of elegant based simulations into the Twiss GUI.
+
+\subsection*{Load the lattice data into Python}
+For the implementation of the data structure into python a object oriented approach was chosen. This is especially useful for the comparison of different lattice configurations. Therefore the Python class \textit{Latticedata} was written. Different lattices $A$ and $B$ can be loaded into Python with a function:
+\begin{lstlisting}[language=Python]
+latticedata_A = returnlatticedata("path/to/file/Bessy_A.lte", mode)
+latticedata_B = returnlatticedata("path/to/file/Bessy_B.lte", mode)
+\end{lstlisting}
+This makes it possible to access all quantities of the lattice at all time, e.g. the length of lattice $A$
+\begin{lstlisting}[language=Python]
+latticedata_A.LatticeLength
+\end{lstlisting}
+or the quadrupole strength of the magnet Q5T2 in lattice $B$:
+\begin{lstlisting}[language=Python]
+latticedata_B.Q5T2.K1
+\end{lstlisting}
+
+\subsection*{Tracking}
+The Tracking of individual particles is implemented due to the transfer matrix method from \autoref{sectiontransfermatrix}. The tracking function has two inputs. The first one is the latticedata class, which contains the transfer matrices for every individual position in the accelerator. The second input is a simple object with the information about the number of rounds and the initial particle distribution function.
+\begin{lstlisting}[language=Python]
+trackingdata = returntrackingdata(latticedata, tracksett)
+\end{lstlisting}
+The trackingdata class holds severals informations. For example an array with the orbit positions and an array with the related horizontal spatial offset can be accessed as attributes: 
+\begin{lstlisting}[language=Python]
+trackingdata.Cs
+trackingdata.xtrack[:, N]
+\end{lstlisting}
+
+\subsection*{Computation of the Twiss parameter}
+The Twiss parameters are transformed with the in \autoref{transformationofthetwissparameter} shown method. The initial values can be obtain due to the periodicity conditions of circular accelerators. Before the Twiss parameter are computed, it is verified that a stable solution exists. Otherwise a warning message is printed. The twissdata can be calculated similar to the trackingdata. The only input object is the latticedata. Optionally it can be chosen, if the betatron phase, the Tune or the momentum-compaction factor should be computed:
+\begin{lstlisting}[language=Python]
+twissdata = returntwissdata(latticedata, twissparameter=True, 
+			    betatronphase=True, momentumcompaction=True)
+\end{lstlisting}
+The vertical beta function $\beta_\text{y}$ or the horizontal dispersion function $\eta_\text{x}$ can be accessed as attributes:
+\begin{lstlisting}[language=Python]
+twissdata.betay
+twissdata.etax
+\end{lstlisting}
+
+\subsection*{The Twiss GUI}
+\begin{figure}
+	\centering
+	\includegraphics[width = \textwidth]{images/A-screenshot-Twiss-GUI.png}
+	\caption[Screenshot of the  Twiss GUI]{Screenshot of the Twiss GUI. New lattices can be loaded via the integrated file manager. It is possible to change the quadrupole strength directly in the GUI. Therefore the user has to right click onto a specific quadrupole family. A left-click within the top area changes the plotted section in the bottom area. To compare different lattices it is possible to set a reference lattice, which is displayed with a dashed line. Also it is possible to show the residual of the Twiss parameter. In the View menu it can be chosen, which Twiss functions should be displayed. }
+	\label{fig:Twiss-GUI}
+\end{figure}
+As in a process of developing a new lattice many configurations are tested, it was convenient to write GUI. The Twiss GUI was build with the python integrated Tkinter module in combination with matplotlib libary~\cite{matplotlib}. The quadrupole strength can be changed in the style of the control room software. This has the advantage, that ideas can be checked quickly before optimizing. Also it is very instructive to understand the influence of the individual quadrupoles on the Twiss parameters. A screenshot of the Twiss GUI is shown in \autoref{fig:Twiss-GUI}
+
+
+
+\subsection*{Fitting the Lattice}
+Due to the large number of input parameters and possible combinations a GUI for the optimizer was almost unavoidable. For the individual optimization a initial lattice has to be chosen. The reference lattice is the basis for the relative residual and the tune correction. For the each of the steps a customized set of magnets can be selected. The different fits can be configured one by one and are then computed in parallel. Afterwards the GUI can be closed without terminating the process.
+
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.8 \textwidth]{images/A-screenshot-Fit-GUI.png}
+	\caption[A GUI to set the parameters and order of the fit procedure]{In the GUI it can be chosen which quadrupole should be turned off. Therefore it is necessary to select the magnets, which should compensate the turn off in the first step. The beta function can than be minimized with a new set of magnets. In the last step a third group of magnets are used to correct the tune.}
+	\label{fig:Fit-GUI}
+\end{figure}
+
+
+\subsection*{Transfer the new lattice to the machine}
+To transfer the new optics to the machine it is necessary to calculated the new power supply for each magnet. So that not all power supply values have to be set to the machine individually a simple GUI was written. It allows to calculate the power supply values and set them directly to the machine with the epics module for Python. The input files are the power supply values from the current lattice, the lattice file including the quadrupole strengths of the current lattice and the new lattice file. To check the new power supply values before setting them to the machine, it is possible to display them in comparison to the old power supply values. 
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.8 \textwidth]{images/A-screenshot-epicsreader-GUI.png}
+	\caption[A simple GUI to calculate the conversion factors]{A simple GUI to calculate the conversion factors of the quadrupoles. The calculated power supply values can be directly set to the machine via the EPICS module.}
+	\label{fig:epicsreader-GUI}
+\end{figure}
+
+
+
+\section{LOCO measurement with MatLab Middle Layer}
+The LOCO measurements were done with the MatLab Middle Layer~\cite{mmlbasedloco} written by Gregory J. Portmann. In the implementation of the MML the LOCO fit slits up in 3 steps. In the first step the LOCO data, which consists of the BPM response matrix, the dispersion function and the online file (BPM noise), is measured. In the next step the loco input file is build, where a model of the accelerator is needed. It is important to chose good initial parameters. Otherwise the convergence behavior is very slow and many iterations are needed. This is also shown in \autoref{fig:convergence-behaviour-magnetstrength}.
+\begin{figure}
+	\centering
+	\includegraphics[width = 0.7\textwidth]{images/A-convergece-behaviour-magnet-strength.pdf}
+	\caption[Convergence behaviour of the magnetstrength of the LOCO fit]{Convergence behaviour of the magnetstrength of LOCOFit when a not exact model is chosen. To reduce the number of iterations the initial values of the LOCO fit can be changed in the bessy2atdeck file.}
+	\label{fig:convergence-behaviour-magnetstrength}
+\end{figure}
+At last the LOCO data is fitted to the model. Thereby different minimization algorithms can be chosen. The quadrupole strength can by extracted by calling the function:  
+\begin{lstlisting}[language=Matlab]
+LOCOtoATRingWithAO('path/to/locoinputfile.mat')
+\end{lstlisting}
+This creates a new MatLab file, which can be converted to a lattice file with mmltools.
+
+\section{Elegant as reference}
+Elegant~\cite{elegant}, written by Michael Borland, is a high developed electron accelerator simulation program. It has a world wide user base and therefore very reliable to use as reference. Its capabilities go way beyond Twiss parameter computation and is entirely written in the C language. As this thesis only considered linear beam optics it seemed reasonable to write a simpler program from scratch. This allowed for a more direct access and a easy modification of various functions.
+
+To implement elegant directly in the Twiss GUI the SDDS python module was used. The therefore written script returns two classes, which have the same information as the latticedata and the twissdata class. A difference of the SDDS format is that it not contains all needed information. For example, to obtain the start and end position of all magnets it is necessary to calculate them separately from the lattice file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
